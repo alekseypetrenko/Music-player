@@ -94,6 +94,8 @@ play.addEventListener("click", () => (isPlaying ? pauseSong() : playSong()));
 prev.addEventListener("click", prevSong);
 next.addEventListener("click", nextSong);
 music.addEventListener("timeupdate", updateProgressBar);
+music.addEventListener("ended", nextSong);
+progressContainer.addEventListener("click", setProgressBar);
 
 // Update progress bar
 function updateProgressBar(e) {
@@ -120,4 +122,12 @@ function updateProgressBar(e) {
       currentTimeElement.textContent = `${currentMinutes}:${currentSeconds}`;
     }
   }
+}
+
+// Set progress bar
+function setProgressBar(e) {
+  const width = this.clientWidth;
+  const clickX = e.offsetX;
+  const { duration } = music;
+  music.currentTime = (clickX / width) * duration;
 }
